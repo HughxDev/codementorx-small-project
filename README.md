@@ -8,18 +8,18 @@ Thank you for participating in the vetting process. You’re only 2 steps away f
 
 ## We will provide:
 1. A video on how to use this tool
-  - https://drive.google.com/open?id=0B1OMFWw257w8dHJGZjNyN3NHcWs
+   - https://drive.google.com/open?id=0B1OMFWw257w8dHJGZjNyN3NHcWs
 2. All required assets
-  - https://small-project-api.herokuapp.com/mockup/web/
+   - https://small-project-api.herokuapp.com/mockup/web/
 3. An API documentation for all the API’s you need to build My Idea Pool
-  - Documentation: https://small-project-api.herokuapp.com/api-docs
-  - API Endpoint: https://small-project-api.herokuapp.com
+   - Documentation: https://small-project-api.herokuapp.com/api-docs
+   - API Endpoint: https://small-project-api.herokuapp.com
 
 ## What you need to do:
 1. Create a *private* `Github` or `Bitbucket` repository for your final code submission
 2. Add our github or bitbucket account to your repository
-  - CMX Github account: `codementorX`
-  - CMX Bitbucket account: `codementorx`
+   - CMX Github account: `codementorX`
+   - CMX Bitbucket account: `codementorx`
 3. Deploy your code to an online version
 4. Email us (cmx-recruiter@codementor.io) with the following information:
   - Email subject:
