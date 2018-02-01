@@ -1,2 +1,1 @@
-# codementorx-small-project
-My Idea Pool
+# My Idea Pool
