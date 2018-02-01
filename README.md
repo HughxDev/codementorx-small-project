@@ -16,17 +16,17 @@ Thank you for participating in the vetting process. You’re only 2 steps away f
    - API Endpoint: https://small-project-api.herokuapp.com
 
 ## What you need to do:
-1. Create a *private* `Github` or `Bitbucket` repository for your final code submission
+1. Create a **private** `Github` or `Bitbucket` repository for your final code submission
 2. Add our github or bitbucket account to your repository
    - CMX Github account: `codementorX`
    - CMX Bitbucket account: `codementorx`
 3. Deploy your code to an online version
 4. Email us (cmx-recruiter@codementor.io) with the following information:
-  - Email subject:
-    - Small Front End Project: My Idea Pool
-  - Your name
-  - Your repository link
-  - An accessible demo link
+   - Email subject:
+     - Small Front End Project: My Idea Pool
+   - Your name
+   - Your repository link
+   - An accessible demo link
 
 ## How long do I have to wait after I submit my project?
 Due to the volume of submission, it takes us at least three working days to review your code and test your project.
