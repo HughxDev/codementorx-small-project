@@ -1,0 +1,15 @@
+@import 'styles/measurements';
+
+.cxsp {
+  &-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
+  &-main {
+    // min-width: $dashboard-nominal-width;
+    width: ( $dashboard-nominal-width / $screen-nominal-width ) * 100vw;
+    margin: 0 auto;
+  }
+}

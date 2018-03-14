@@ -1,0 +1,55 @@
+@import 'styles/colors';
+
+.cxsp {
+  &-header{
+    position: relative;
+    height: 126px;
+    border-bottom: 1px solid rgba(42,56,66,0.2);
+    margin-bottom: 39px;
+
+    &__heading,
+    &__add-idea {
+      display: inline-block;
+      vertical-align: middle;
+      position: absolute;
+    }
+
+    &__heading {
+      // font-family: 'SF Pro Display', Helvetica, sans-serif;
+      font-weight: normal;
+      top: 41px;
+      margin: 0;
+    }
+
+    &__add-idea {
+      $size: 50px;
+
+      right: 0;
+      top: 44px;
+      background-color: $green;
+      border: none;
+      color: white;
+      width: $size;
+      height: $size;
+      border-radius: $size * 2;
+      padding: 0;
+      line-height: 0.5;
+      // display: inline-flex;
+      // align-items: center;
+      // justify-content: center;
+
+      &-plus {
+        display: block;
+        margin: 0 auto;
+        font-size: 28px;
+        font-weight: lighter;
+        line-height: 0.45;
+        font-size: 3rem;
+        height: 28px;
+        width: 28px;
+        overflow: hidden;
+      }
+    }
+  }
+
+}
