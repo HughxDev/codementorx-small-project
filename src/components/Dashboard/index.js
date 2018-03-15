@@ -5,23 +5,23 @@ import './index.css';
 
 class Dashboard extends Component {
   state = {
-    "ideas": {}
+    "ideas": []
   }
 
-  addIdea = ( key, idea ) => {
-    const ideas = { ...this.state.ideas };
-    ideas[key] = idea;
+  addIdea = ( idea ) => {
+    const ideas = [ ...this.state.ideas ];
+    ideas.unshift( idea );
     this.setState( { ideas } );
   };
 
   updateIdea = ( key, updatedIdea ) => {
-    const ideas = { ...this.state.ideas };
+    const ideas = [ ...this.state.ideas ];
     ideas[key] = updatedIdea;
     this.setState( { ideas } );
   };
 
   deleteIdea = ( key ) => {
-    const ideas = { ...this.state.ideas };
+    const ideas = [ ...this.state.ideas ];
     // ideas[key] = null;
     delete ideas[key];
     this.setState( { ideas } );

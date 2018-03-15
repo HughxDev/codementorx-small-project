@@ -40,7 +40,8 @@ class Idea extends Component {
   render() {
     var possibleRankings = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
     var rankings = possibleRankings.map( ( number ) => <option key={ number }>{ number }</option> );
-    var idea = this.props.idea;
+    var idea = this.props.ideas[this.props.index]; //idea;
+    console.log( idea )
 
     return (
       <tr>

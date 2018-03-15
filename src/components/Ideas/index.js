@@ -7,7 +7,7 @@ import './index.css';
 
 class Ideas extends Component {
   static propTypes = {
-    "ideas": PropTypes.object,
+    "ideas": PropTypes.array,
     "updateIdea": PropTypes.func,
     "deleteIdea": PropTypes.func,
   };
@@ -32,13 +32,15 @@ class Ideas extends Component {
               </tr>
             </thead>
             <tbody>
-              { Object.keys( this.props.ideas ).map( key => {
-                var idea = this.props.ideas[key];
+              { this.props.ideas.map( ( idea, key ) => {
+                // var idea = this.props.ideas[key];
+                console.log(key);
                 return (
                   <Idea
                     key={ key }
                     index={ key }
                     idea={ idea }
+                    ideas={ this.props.ideas }
                     updateIdea={ this.props.updateIdea }
                     deleteIdea={ this.props.deleteIdea }
                   />

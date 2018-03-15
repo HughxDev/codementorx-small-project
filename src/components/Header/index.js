@@ -10,7 +10,7 @@ class Header extends Component {
       "confidence": 10
     };
 
-    this.props.addIdea( `${ Date.now() }`, newIdea );
+    this.props.addIdea( newIdea );
   };
 
   render() {
