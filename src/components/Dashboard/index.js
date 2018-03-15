@@ -28,20 +28,18 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="cxsp-dashboard">
-        <div className="cxsp-dashboard__inner">
-          <Header
-            addIdea={ this.addIdea }
-            ideas={ this.state.ideas }
-          />
-          <Ideas
-            addIdea={ this.addIdea }
-            updateIdea={ this.updateIdea }
-            deleteIdea={ this.deleteIdea }
-            ideas={ this.state.ideas }
-          />
-        </div>
-      </div>
+      <React.Fragment>
+        <Header
+          addIdea={ this.addIdea }
+          ideas={ this.state.ideas }
+        />
+        <Ideas
+          addIdea={ this.addIdea }
+          updateIdea={ this.updateIdea }
+          deleteIdea={ this.deleteIdea }
+          ideas={ this.state.ideas }
+        />
+      </React.Fragment>
     );
   }
 }

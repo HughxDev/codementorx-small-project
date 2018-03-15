@@ -6,4 +6,22 @@
     flex-direction: row;
     height: 100%;
   }
+
+  &-workspace {
+    $width: ( $dashboard-nominal-width / $screen-nominal-width ) * 100%;
+
+    width: $width;
+    flex: ( $width / 1% );
+
+    &__inner {
+      // width: floor( ( $dashboard-nominal-width / $screen-nominal-width ) * 100% ) + 0.54%; // == * 100vw
+      // width: ( $dashboard-inner-nominal-width / $screen-nominal-width ) * 100%;
+      // @include rem(width, $dashboard-inner-nominal-width);
+      width: ( $dashboard-inner-nominal-width / $dashboard-nominal-width ) * 100%;
+      height: 100%;
+      // max-width: 100%;
+      margin: 0 auto;
+      color: $blue-gray;
+    }
+  }
 }
