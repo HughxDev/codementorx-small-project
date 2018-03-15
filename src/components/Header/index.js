@@ -4,7 +4,7 @@ import './index.css';
 class Header extends Component {
   handleAddIdea = ( event ) => {
     var newIdea = {
-      "text": "",
+      "content": "",
       "impact": 10,
       "ease": 10,
       "confidence": 10
