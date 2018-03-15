@@ -9,7 +9,7 @@ class Sidebar extends Component {
       <aside className="cxsp-sidebar">
         <header className="cxsp-sidebar__header">
           <Logo />
-          <h2 className="cxsp-heading cxsp-sidebar__heading">The Idea Pool</h2>
+          <h1 className="cxsp-heading cxsp-sidebar__heading">The Idea Pool</h1>
         </header>
         <User logoutLinkModifier="sidebar" />
       </aside>
