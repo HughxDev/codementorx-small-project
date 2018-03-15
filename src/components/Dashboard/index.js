@@ -22,8 +22,7 @@ class Dashboard extends Component {
 
   deleteIdea = ( key ) => {
     const ideas = [ ...this.state.ideas ];
-    // ideas[key] = null;
-    delete ideas[key];
+    ideas.splice( key, 1 );
     this.setState( { ideas } );
   };
 
