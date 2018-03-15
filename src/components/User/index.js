@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Avatar from '../Avatar';
+import UserAvatar from '../UserAvatar';
 import './index.css';
 
 class User extends Component {
@@ -7,13 +7,23 @@ class User extends Component {
     "name": "Joyce Lee"
   };
 
+  getClasses() {
+    if ( this.props.logoutLinkModifier ) {
+      return `cxsp-user__logout-link cxsp-user__logout-link--${this.props.logoutLinkModifier}`;
+    }
+
+    return 'cxsp-user__logout-link';
+  }
+
   render() {
     return (
-      <React.Fragment>
-        <Avatar />
-        <div>{this.profile.name}</div>
-        <div><a href="javascript:void()">Log Out</a></div>
-      </React.Fragment>
+      <div className="cxsp-user">
+        <UserAvatar className="cxsp-user__avatar" />
+        <div className="cxsp-user__name">{this.profile.name}</div>
+        <div className="cxsp-user__logout">
+          <a className={this.getClasses()} href="javascript:void()">Log Out</a>
+        </div>
+      </div>
     );
   }
 }

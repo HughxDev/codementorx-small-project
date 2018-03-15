@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Sidebar from '../Sidebar';
 import Header from '../Header';
+import Ideas from '../Ideas';
 import './index.css';
 
 class Dashboard extends Component {
   render() {
     return (
-      <div className="cxsp-wrapper">
-        <Sidebar />
-        <main className="cxsp-main">
+      <div className="cxsp-dashboard">
+        <div className="cxsp-dashboard__inner">
           <Header />
-          <p>Got ideas?</p>
-        </main>
+          <Ideas />
+        </div>
       </div>
     );
   }

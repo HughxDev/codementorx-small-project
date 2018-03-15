@@ -1,0 +1,25 @@
+@import 'styles/index';
+
+.cxsp {
+  &-user {
+    &__name {
+      @include rem(font-size, 20px);
+      @include rem(margin, 6px auto 9px);
+    }
+
+    &__logout-link {
+      @include rem(font-size, 16px);
+      text-decoration: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: underline;
+      }
+
+      &--sidebar {
+        color: rgba(42,56,66,0.65);
+      }
+    }
+  }
+}

@@ -7,11 +7,11 @@ class Sidebar extends Component {
   render() {
     return (
       <aside className="cxsp-sidebar">
-        <header>
+        <header className="cxsp-sidebar__header">
           <Logo />
-          <h2>The Idea Pool</h2>
+          <h2 className="cxsp-heading cxsp-sidebar__heading">The Idea Pool</h2>
         </header>
-        <User />
+        <User logoutLinkModifier="sidebar" />
       </aside>
     );
   }

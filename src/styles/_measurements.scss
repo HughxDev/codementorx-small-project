@@ -1,7 +1,19 @@
+$rem-fallback: true;
+@import "sass-rem/rem"; // https://github.com/pierreburel/sass-rem
+
+$line-length: 39em;
+
 $screen-nominal-width: 1280px;
 $screen-nominal-height: 1024px;
 
-$dashboard-hr-nominal-width: 915px;
-$dashboard-nominal-width: $dashboard-hr-nominal-width;
+$dashboard-inner-nominal-width: 915px;
+$dashboard-nominal-width: $dashboard-inner-nominal-width + 165.6px;
+
+$noideas-nominal-top-spacing: 246px;
+$ideas-nominal-height: 895px;
 
 $sidebar-nominal-width: 199.4px;
+
+$header-height: 126px;
+$header-margin-bottom: 39px;
+$header-total-height: $header-height + $header-margin-bottom;
