@@ -5,7 +5,7 @@ import Idea from '../Idea';
 import NoIdeas from '../NoIdeas';
 import './index.css';
 
-class Ideas extends Component {
+class IdeaList extends Component {
   static propTypes = {
     "ideas": PropTypes.array,
     "updateIdea": PropTypes.func,
@@ -55,4 +55,4 @@ class Ideas extends Component {
   }
 }
 
-export default Ideas;
+export default IdeaList;

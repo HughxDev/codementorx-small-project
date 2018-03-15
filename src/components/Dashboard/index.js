@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import Ideas from '../Ideas';
+import IdeaList from '../IdeaList';
 import './index.css';
 
 class Dashboard extends Component {
@@ -33,7 +33,7 @@ class Dashboard extends Component {
           addIdea={ this.addIdea }
           ideas={ this.state.ideas }
         />
-        <Ideas
+        <IdeaList
           addIdea={ this.addIdea }
           updateIdea={ this.updateIdea }
           deleteIdea={ this.deleteIdea }

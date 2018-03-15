@@ -4,7 +4,7 @@ import LogIn from '../LogIn';
 import Dashboard from '../Dashboard';
 import Promise from 'promise-polyfill';
 import 'whatwg-fetch';
-import { User } from '../API';
+import { User, Ideas } from '../API';
 import './index.css';
 
 class App extends Component {
@@ -29,8 +29,31 @@ class App extends Component {
       return User.refreshToken();
     } )
     .then( ( result ) => {
-      return User.logout();
-    } );
+      return User.profile().then( ( result ) => { console.log( result ); });
+    } )
+    .then( ( result ) => {
+      Ideas.create( {
+        "content": "the-content",
+        "impact": 8,
+        "ease": 8,
+        "confidence": 8
+      } ).then( ( result ) => {
+        Ideas.get().then( ( result ) => {
+          console.log( result );
+
+          Ideas.destroy( result.pop().id ).then( ( result ) => {
+            console.log( result );
+
+            Ideas.get().then( ( result ) => {
+              console.log( result );
+            } );
+          } );
+        } )
+      } )
+    } )
+    // .then( ( result ) => {
+    //   return User.logout();
+    // } );
   }
 
   render() {

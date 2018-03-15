@@ -158,8 +158,107 @@ class User extends API {
     );
   } // /refreshToken
 
+  static profile() {
+    const endpoint = this.baseEndpoint + '/me';
+    var identity = this.getIdentity();
 
+    return (
+      fetch(
+        endpoint,
+        {
+          ...this.defaultFetchOptions,
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Access-Token": identity.jwt
+          }
+        }
+      )
+      .then( this.checkStatus )
+      .then( this.parseJSON )
+      .then( ( result ) => { return result; } )
+      .catch( ( error ) => {
+        console.log( error );
+      } )
+    );
+  }
 } // /User
 
-export { User };
+class Ideas extends API {
+  static create( idea ) {
+    const endpoint = this.baseEndpoint + '/ideas';
+    var identity = this.getIdentity();
+
+    return (
+      fetch(
+        endpoint,
+        {
+          ...this.defaultFetchOptions,
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Access-Token": identity.jwt
+          },
+          "body": JSON.stringify( idea )
+        }
+      )
+      .then( this.checkStatus )
+      .then( this.parseJSON )
+      .then( ( result ) => { return result; } )
+      .catch( ( error ) => {
+        console.log( error );
+      } )
+    );
+  }
+
+  static get() {
+    const endpoint = this.baseEndpoint + '/ideas';
+    var identity = this.getIdentity();
+
+    return (
+      fetch(
+        endpoint,
+        {
+          ...this.defaultFetchOptions,
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Access-Token": identity.jwt
+          }
+        }
+      )
+      .then( this.checkStatus )
+      .then( this.parseJSON )
+      .then( ( result ) => { return result; } )
+      .catch( ( error ) => {
+        console.log( error );
+      } )
+    );
+  }
+
+  static destroy( id ) {
+    const endpoint = this.baseEndpoint + '/ideas/' + id;
+    var identity = this.getIdentity();
+
+    return (
+      fetch(
+        endpoint,
+        {
+          ...this.defaultFetchOptions,
+          "method": "DELETE",
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Access-Token": identity.jwt
+          }
+        }
+      )
+      .then( this.checkStatus )
+      .then( this.parseJSON )
+      .then( ( result ) => { return result; } )
+      .catch( ( error ) => {
+        console.log( error );
+      } )
+    );
+  }
+}
+
+export { User, Ideas };
 export default API;
