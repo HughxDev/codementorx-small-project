@@ -2,11 +2,35 @@ import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
 import LogIn from '../LogIn';
 import Dashboard from '../Dashboard';
+import Promise from 'promise-polyfill';
+import 'whatwg-fetch';
+import { User } from '../API';
 import './index.css';
 
 class App extends Component {
   isLoggedIn() {
     return true;
+  }
+
+  componentDidMount() {
+    // User.create( {
+    //   "email": "hugh@hughguiney.com",
+    //   "name": "Hugh Guiney",
+    //   "password": "Password123"
+    // } ).then( ( result ) => {
+    //   console.log( result );
+    // } );
+
+    User.login( {
+      "email": "hugh@hughguiney.com",
+      "password": "Password123"
+    } )
+    .then( ( result ) => {
+      return User.refreshToken();
+    } )
+    .then( ( result ) => {
+      return User.logout();
+    } );
   }
 
   render() {
