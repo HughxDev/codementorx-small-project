@@ -8,28 +8,20 @@ import { User, Ideas } from '../API';
 import './index.css';
 
 class App extends Component {
-  isLoggedIn() {
-    return true;
-  }
-
-  componentDidMount() {
-    // User.create( {
-    //   "email": "hugh@hughguiney.com",
-    //   "name": "Hugh Guiney",
-    //   "password": "Password123"
-    // } ).then( ( result ) => {
-    //   console.log( result );
-    // } );
-
+  _testApi() {
     User.login( {
       "email": "hugh@hughguiney.com",
       "password": "Password123"
     } )
     .then( ( result ) => {
+      console.log( 'Logged in!' );
       return User.refreshToken();
     } )
     .then( ( result ) => {
-      return User.profile().then( ( result ) => { console.log( result ); });
+      return User.profile().then( ( result ) => {
+        console.log( 'Got profile!' );
+        console.log( result );
+      });
     } )
     .then( ( result ) => {
       Ideas.create( {
@@ -38,21 +30,48 @@ class App extends Component {
         "ease": 8,
         "confidence": 8
       } ).then( ( result ) => {
+        console.log( 'Idea created!' );
         Ideas.get().then( ( result ) => {
           console.log( result );
 
           Ideas.destroy( result.pop().id ).then( ( result ) => {
+            console.log( 'Idea deleted!' );
             console.log( result );
 
             Ideas.get().then( ( result ) => {
               console.log( result );
             } );
+          } )
+          .catch( ( error ) => {
+            console.log( error );
           } );
         } )
       } )
     } )
     // .then( ( result ) => {
-    //   return User.logout();
+    //   return User.logout().then( ( result ) => {
+    //     console.log( 'Logged out!' );
+    //   } );
+    // } );
+  }
+
+  isLoggedIn() {
+    // return true;
+    // console.log( User.getIdentity() );
+    return false
+  }
+
+  componentDidMount() {
+    // this._testApi();
+
+    // var me = new User( {
+    //   "email": "hugh@hughguiney.com",
+    //   "password": "Password123"
+    // } );
+
+    // me.profile().then( ( result ) => {
+    //   console.log( result );
+    //   return result;
     // } );
   }
 
