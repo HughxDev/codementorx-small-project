@@ -43,25 +43,78 @@ class Idea extends Component {
     var idea = this.props.ideas[this.props.index]; //idea;
 
     return (
-      <tr>
-        <td>
-          <input type="text" name="content" value={ idea.content } maxLength="255" onChange={ this.handleChange } />
+      <tr className="cxsp-ideas__idea">
+        <td className="cxsp-ideas__column-content cxsp-idea__datum cxsp-idea__datum--content">
+          <input
+            className="cxsp-form-control cxsp-form-control--text cxsp-form-control--idea-content"
+            type="text"
+            name="content"
+            value={ idea.content }
+            maxLength="255"
+            onChange={ this.handleChange }
+          />
         </td>
-        <td>
-          <select name="impact" value={ idea.impact } onChange={ this.handleChange }>{ rankings }</select>
+        <td className="cxsp-ideas__column-impact cxsp-idea__datum cxsp-idea__datum--impact">
+          <select
+            className="cxsp-form-control cxsp-form-control--small-font cxsp-form-control--ranking"
+            name="impact"
+            value={ idea.impact }
+            onChange={ this.handleChange }
+          >
+            { rankings }
+          </select>
         </td>
-        <td>
-          <select name="ease" value={ idea.ease } onChange={ this.handleChange }>{ rankings }</select>
+        <td className="cxsp-ideas__column-ease cxsp-idea__datum cxsp-idea__datum--ease">
+          <select
+            className="cxsp-form-control cxsp-form-control--small-font cxsp-form-control--ranking"
+            name="ease"
+            value={ idea.ease }
+            onChange={ this.handleChange }
+          >
+            { rankings }
+          </select>
         </td>
-        <td>
-          <select name="confidence" value={ idea.confidence } onChange={ this.handleChange }>{ rankings }</select>
+        <td className="cxsp-ideas__column-confidence cxsp-idea__datum cxsp-idea__datum--confidence">
+          <select
+            className="cxsp-form-control cxsp-form-control--small-font cxsp-form-control--ranking"
+            name="confidence"
+            value={ idea.confidence }
+            onChange={ this.handleChange }
+          >
+            { rankings }
+          </select>
         </td>
-        <td>
-          <output>{ Math.round( ( idea.impact + idea.ease + idea.confidence ) / 3 ) }</output>
+        <td className="cxsp-ideas__column-average cxsp-idea__datum cxsp-idea__datum--average">
+          <output className="cxsp-form-control cxsp-form-control--small-font">{ Math.round( ( idea.impact + idea.ease + idea.confidence ) / 3 ) }</output>
         </td>
-        <td>
-          <button>✔</button>
-          <button onClick={ this.handleDelete }>✖</button>
+        <td className="cxsp-ideas__column-actions cxsp-idea__datum cxsp-idea__datum--actions">
+          <button
+            className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--accept"
+            title="Accept"
+          >
+            <img
+              className="cxsp-idea-action__icon"
+              width="21"
+              height="16"
+              src="/images/checkmark.png"
+              srcSet="/images/checkmark.png 1x, /images/checkmark@2x.png 2x"
+              alt="✔"
+            />
+          </button>
+          <button
+            className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--cancel"
+            width="18"
+            height="18"
+            title="Cancel"
+            onClick={ this.handleDelete }
+          >
+            <img
+              className="cxsp-idea-action__icon"
+              src="/images/x.png"
+              srcSet="/images/x.png 1x, /images/x@2x.png 2x"
+              alt="✖"
+            />
+          </button>
         </td>
       </tr>
     );

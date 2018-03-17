@@ -14,7 +14,7 @@
     &__logout-link {
       @include rem(font-size, 16px);
 
-      &--sidebar {
+      &#{&}--sidebar {
         color: rgba(42,56,66,0.65);
       }
     }

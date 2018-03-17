@@ -21,8 +21,12 @@ a {
   a:hover, a:focus, a:active {
     text-decoration: underline; }
 
-.cxsp-heading {
+.cxsp-heading, .cxsp-table-heading {
   font-weight: normal; }
+
+.cxsp-table-heading {
+  font-size: 14px;
+  font-size: 0.875rem; }
 
 .cxsp-button {
   cursor: pointer;
@@ -34,6 +38,9 @@ a {
   font-size: 0.875rem;
   font-style: normal; }
 
+.cxsp-table {
+  border-collapse: collapse; }
+
 .cxsp-form-group + .cxsp-form-group {
   margin-top: 52px;
   margin-top: 3.25rem; }
@@ -42,15 +49,42 @@ a {
   margin-top: 64px;
   margin-top: 4rem; }
 
-.cxsp-form-control {
+.cxsp-form-control::placeholder {
+  color: rgba(42, 56, 66, 0.6); }
+
+.cxsp-form-control.cxsp-form-control--text {
   border: none;
   width: 100%;
   font-size: 16px;
   font-size: 1rem;
-  padding: 0 0 8px;
-  padding: 0 0 0.5rem;
+  padding: 0 0 9px;
+  padding: 0 0 0.5625rem;
+  margin-bottom: 1px;
+  margin-bottom: 0.0625rem;
   border-bottom: 1px solid #455E70;
   border-bottom: 0.0625rem solid #455E70;
+  height: 30px;
+  height: 1.875rem;
   outline: none; }
-  .cxsp-form-control::placeholder {
-    color: rgba(42, 56, 66, 0.6); }
+
+.cxsp-form-control.cxsp-form-control--small-font {
+  font-size: 14px;
+  font-size: 0.875rem; }
+
+.cxsp-form-control.cxsp-form-control--ranking {
+  max-width: 49.2px;
+  max-width: 3.075rem;
+  height: 36px;
+  height: 2.25rem; }
+
+.cxsp-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+  /* 1 */ }

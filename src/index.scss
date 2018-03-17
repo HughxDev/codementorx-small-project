@@ -33,8 +33,15 @@ a {
 }
 
 .cxsp {
-  &-heading {
+  &-heading,
+  &-table-heading {
     font-weight: normal;
+  }
+
+  &-heading {}
+
+  &-table-heading {
+    @include rem(font-size, 14px);
   }
 
   &-button {
@@ -45,6 +52,12 @@ a {
     text-transform: uppercase;
     @include rem(font-size, 14px);
     font-style: normal;
+  }
+
+  &-table {
+    // border-collapse: separate;
+    // @include rem(border-spacing, 0 36px);
+    border-collapse: collapse;
   }
 
   &-form-group {
@@ -58,15 +71,41 @@ a {
   }
 
   &-form-control {
-    border: none;
-    width: 100%;
-    @include rem(font-size, 16px);
-    @include rem(padding, 0 0 8px);
-    @include rem(border-bottom, 1px solid #455E70);
-    outline: none;
-
     &::placeholder {
       color: rgba(42,56,66,0.60);
     }
+
+    &#{&}--text {
+      border: none;
+      width: 100%;
+      @include rem(font-size, 16px);
+      @include rem(padding, 0 0 ( 8px + 1px ) );
+      @include rem(margin-bottom, 1px);
+      @include rem(border-bottom, 1px solid #455E70);
+      @include rem(height, 30px);
+      outline: none;
+    }
+
+    &#{&}--small-font {
+      @include rem(font-size, 14px);
+    }
+
+    &#{&}--ranking {
+      @include rem(max-width, 49.2px);
+      @include rem(height, 36px);
+    }
+  }
+
+  // https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L130-L140
+  &-visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap; /* 1 */
   }
 }

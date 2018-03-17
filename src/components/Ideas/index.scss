@@ -1,0 +1,50 @@
+@import 'styles/index';
+
+%column-centered {
+  text-align: center;
+}
+
+.cxsp {
+  &-ideas {
+    $header-height-with-border: $header-height + 2px;
+    height: calc( 100% - #{$header-height-with-border} );
+    height: calc( 100% - #{rem($header-height-with-border)} );
+    // background: rgba(255,255,0,0.5);
+    position: relative;
+
+    &__column {
+      &-content {
+        width: ( $ideas-column-content-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+      }
+
+      &-impact {
+        @extend %column-centered;
+        width: ( $ideas-column-impact-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+      }
+
+      &-ease {
+        @extend %column-centered;
+        width: ( $ideas-column-ease-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+      }
+
+      &-confidence {
+        @extend %column-centered;
+        width: ( $ideas-column-confidence-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+      }
+
+      &-average {
+        @extend %column-centered;
+        width: ( $ideas-column-average-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+
+        &.cxsp-table-heading {
+          font-weight: bold;
+        }
+      }
+
+      &-actions {
+        @extend %column-centered;
+        width: ( $ideas-column-actions-nominal-width / $dashboard-inner-nominal-width ) * 100%;
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import Idea from '../Idea';
 import NoIdeas from '../NoIdeas';
 import './index.css';
 
-class IdeaList extends Component {
+class Ideas extends Component {
   static propTypes = {
     "ideas": PropTypes.array,
     "updateIdea": PropTypes.func,
@@ -20,15 +20,27 @@ class IdeaList extends Component {
     return (
       <main className="cxsp-ideas">
         <div hidden={ !this.hasIdeas() }>
-          <table>
+          <table className="cxsp-table">
             <thead>
               <tr>
-                <th scope="col">Idea</th>
-                <th scope="col">Impact</th>
-                <th scope="col">Ease</th>
-                <th scope="col">Confidence</th>
-                <th scope="col"><abbr>Avg.</abbr></th>
-                <th scope="col">Actions</th>
+                <th className="cxsp-table-heading cxsp-ideas__column-content" scope="col">
+                  <span className="cxsp-visually-hidden">Content</span>
+                </th>
+                <th className="cxsp-table-heading cxsp-ideas__column-impact" scope="col">
+                  Impact
+                </th>
+                <th className="cxsp-table-heading cxsp-ideas__column-ease" scope="col" scope="col">
+                  Ease
+                </th>
+                <th className="cxsp-table-heading cxsp-ideas__column-confidence" scope="col" scope="col">
+                  Confidence
+                </th>
+                <th className="cxsp-table-heading cxsp-ideas__column-average" scope="col">
+                  <abbr>Avg.</abbr>
+                </th>
+                <th className="cxsp-table-heading cxsp-ideas__column-actions" scope="col">
+                  <span className="cxsp-visually-hidden">Actions</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -55,4 +67,4 @@ class IdeaList extends Component {
   }
 }
 
-export default IdeaList;
+export default Ideas;

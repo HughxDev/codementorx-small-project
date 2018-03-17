@@ -8,7 +8,7 @@
     // so redistributing 1px each to padding and margin to even out
     @include rem(border-bottom, 1px solid rgba(42,56,66,0.2));
     @include rem(padding-bottom, 1px);
-    @include rem(margin-bottom, 1px);
+    @include rem(margin-bottom, ( $header-margin-bottom + 1px ));
 
     &__heading,
     &__add-idea {

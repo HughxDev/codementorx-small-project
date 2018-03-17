@@ -1,5 +1,65 @@
 @import 'styles/index';
 
 .cxsp {
-  
+  &-button#{&}-button--idea-action {
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &-button#{&}-button--idea-action + &-button#{&}-button--idea-action {
+    @include rem(margin-left, 22px);
+  }
+
+  &-idea {
+    &-action {
+      &__icon {
+        display: inline-block;
+      }
+    }
+
+    &__datum {
+      @include rem(padding, ( 36px / 2 ) 0 );
+
+      &--content {
+        position: relative;
+
+        &::before {
+          content: '•';
+          display: inline-block;
+          position: absolute;
+          @include rem(left, -17px);
+          @include rem(width, 8px);
+          top: calc( 50% - 8px);
+          top: calc( 50% - #{rem(8px)});
+          color: transparent;
+          background: rgba(42,56,66,0.40);
+          @include rem(width, 8px);
+          @include rem(height, 8px);
+          @include rem(border-radius, 16px);
+          vertical-align: middle;
+        }
+      }
+    }
+
+    &__action {
+      &--accept {
+        @include rem(width, 21px);
+        @include rem(height, 16px);
+      }
+
+      &--cancel {
+        @include rem(width, 18px);
+        @include rem(height, 18px);
+      }
+    }
+  }
+
+  &-form-control#{&}-form-control--text#{&}-form-control--idea-content {
+    @include rem(padding-bottom, 11px);
+    @include rem(height, (25px + 2px + 10px + 1px));
+    @include rem(margin-bottom, 1px);
+  }
 }

@@ -10,13 +10,12 @@
     @include rem(max-width, 485.2px);
     margin: 0 auto;
 
-
-    &--sign-up {
+    &#{&}--sign-up {
       $top: ( $sign-up-nominal-top-spacing / $screen-nominal-height ) * 100%;
       padding-top: $top;
     }
 
-    &--log-in {
+    &#{&}--log-in {
       $top: ( $log-in-nominal-top-spacing / $screen-nominal-height ) * 100%;
       padding-top: $top;
     }
