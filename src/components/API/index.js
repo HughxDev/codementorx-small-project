@@ -122,7 +122,7 @@ class User extends API {
     );
   } // /create
 
-  static login( credentials ) {
+  static logIn( credentials ) {
     const endpoint = this.baseEndpoint + '/access-tokens';
 
     return (
@@ -145,7 +145,7 @@ class User extends API {
         console.log( error );
       } )
     );
-  } // /login
+  } // /logIn
 
   static logout() {
     const endpoint = this.baseEndpoint + '/access-tokens';

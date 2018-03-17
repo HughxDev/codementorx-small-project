@@ -21,6 +21,17 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
+a {
+  color: $green;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: underline;
+  }
+}
+
 .cxsp {
   &-heading {
     font-weight: normal;
@@ -28,5 +39,34 @@ body {
 
   &-button {
     cursor: pointer;
+    background-color: $green;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    @include rem(font-size, 14px);
+    font-style: normal;
+  }
+
+  &-form-group {
+    & + & {
+      @include rem(margin-top, 52px);
+    }
+
+    &--submit {
+      @include rem(margin-top, 64px);
+    }
+  }
+
+  &-form-control {
+    border: none;
+    width: 100%;
+    @include rem(font-size, 16px);
+    @include rem(padding, 0 0 8px);
+    @include rem(border-bottom, 1px solid #455E70);
+    outline: none;
+
+    &::placeholder {
+      color: rgba(42,56,66,0.60);
+    }
   }
 }

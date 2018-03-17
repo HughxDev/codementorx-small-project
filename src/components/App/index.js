@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
-import LogIn from '../LogIn';
+import SignUpLogIn from '../SignUpLogIn';
 import Dashboard from '../Dashboard';
 import Promise from 'promise-polyfill';
 import 'whatwg-fetch';
@@ -8,6 +8,14 @@ import { User, Ideas } from '../API';
 import './index.css';
 
 class App extends Component {
+  constructor( props ) {
+    super( props );
+
+    this.state = {
+      "isLoggedIn": false
+    };
+  }
+
   _testApi() {
     User.login( {
       "email": "hugh@hughguiney.com",
@@ -55,11 +63,26 @@ class App extends Component {
     // } );
   }
 
-  isLoggedIn() {
-    // return true;
-    // console.log( User.getIdentity() );
-    return false
-  }
+  isLoggedIn = () => {
+    return this.state.isLoggedIn;
+  };
+
+  signUp = ( formData ) => {
+    console.log( 'Attempting to sign up' );
+  };
+
+  logIn = ( formData ) => {
+    console.log( 'Attempting to log in' );
+
+    User.logIn( formData ).then( ( result ) => {
+      // console.log( result );
+      this.setState( { "isLoggedIn": true } );
+    } )
+    .catch( ( error ) => {
+      console.log( error );
+      this.setState( { "isLoggedIn": false } );
+    } );
+  };
 
   componentDidMount() {
     // this._testApi();
@@ -81,7 +104,7 @@ class App extends Component {
         <Sidebar isLoggedIn={ this.isLoggedIn } />
         <div className="cxsp-workspace">
           <div className="cxsp-workspace__inner">
-            { !this.isLoggedIn() && <LogIn /> }
+            { !this.isLoggedIn() && <SignUpLogIn signUp={ this.signUp } logIn={ this.logIn } /> }
             { this.isLoggedIn() && <Dashboard /> }
           </div>
         </div>
