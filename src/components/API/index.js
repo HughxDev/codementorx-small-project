@@ -34,6 +34,14 @@ class API {
     }
   }
 
+  static isUnauthorizedError( error ) {
+    return (
+      error.hasOwnProperty( 'response' ) &&
+      ( 'status' in error.response ) &&
+      ( error.response.status === 401 )
+    );
+  }
+
   static parseJSON( response ) {
     if ( response.status === 204 ) {
       return response;
@@ -58,7 +66,7 @@ class API {
 
   // Identity Storage
 
-  static getIdentity() {
+  static _getIdentity() {
     var identity = this._retrieve( 'identity' );
 
     if ( identity ) {
@@ -68,27 +76,27 @@ class API {
     return identity;
   }
 
-  static setIdentity( identity ) {
+  static _setIdentity( identity ) {
     identity.expires = moment().add( 10, 'minutes' ).format();
 
     return this._store( 'identity', identity );
   }
 
-  static clearIdentity() {
+  static _clearIdentity() {
     return this._clear( 'identity' );
   }
 
-  // Profile Storage
+  // profile Storage
 
-  static getProfile() {
+  static _getProfile() {
     return this._retrieve( 'profile' );
   }
 
-  static setProfile( profile ) {
+  static _setProfile( profile ) {
     return this._store( 'profile', profile );
   }
 
-  static clearProfile() {
+  static _clearProfile() {
     return this._clear( 'profile' );
   }
 } // /API
@@ -113,7 +121,7 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
-        this.setIdentity( result );
+        this._setIdentity( result );
         return result;
       } )
       .catch( ( error ) => {
@@ -136,9 +144,9 @@ class User extends API {
       )
       .then( this.checkStatus )
       .then( this.parseJSON )
-      // .then( this.setIdentity )
+      // .then( this._setIdentity )
       .then( ( result ) => {
-        this.setIdentity( result );
+        this._setIdentity( result );
         return result;
       } )
       .catch( ( error ) => {
@@ -147,9 +155,9 @@ class User extends API {
     );
   } // /logIn
 
-  static logout() {
+  static logOut() {
     const endpoint = this.baseEndpoint + '/access-tokens';
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );
@@ -173,18 +181,26 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
-        this.clearIdentity();
+        this._clearIdentity();
         return result;
       } )
       .catch( ( error ) => {
         console.log( error );
+
+        if ( this.isUnauthorizedError( error ) ) {
+          console.log( 'Unauthorized!' );
+          // this._clearIdentity();
+          return this.refreshToken().then( ( newIdentity ) => {
+            return User.logOut();
+          } );
+        }
       } )
     );
-  } // /logout
+  } // /logOut
 
   static refreshToken() {
     const endpoint = this.baseEndpoint + '/access-tokens/refresh';
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );
@@ -205,11 +221,14 @@ class User extends API {
       .then( this.parseJSON )
       .then( ( result ) => {
         console.log( 'Refreshed token!' );
-        this.setIdentity( {
-          ...this.getIdentity(),
+        var newIdentity = {
+          ...this._getIdentity(),
           "jwt": result.jwt
-        } );
-        return result;
+        };
+
+        this._setIdentity( newIdentity );
+
+        return newIdentity;
       } )
       .catch( ( error ) => {
         console.log( error );
@@ -219,7 +238,7 @@ class User extends API {
 
   static profile() {
     const endpoint = this.baseEndpoint + '/me';
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );
@@ -239,14 +258,17 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
-        this.setProfile( result );
+        this._setProfile( result );
         return result;
       } )
       .catch( ( error ) => {
-        // If unauthorized to get profile
-        if ( error.response && error.response.hasOwnProperty( 'status' ) && ( error.response.status === 401 ) ) {
+        if ( this.isUnauthorizedError( error ) ) {
           console.log( 'Unauthorized!' );
-          this.clearIdentity();
+
+          // this._clearIdentity();
+          this.refreshToken().then( ( newIdentity ) => {
+            return User.profile();
+          } );
         }
 
         return error;
@@ -254,40 +276,25 @@ class User extends API {
     );
   }
 
-  constructor( credentials ) {
-    super();
-
-    this.credentials = credentials;
-
-    return this;
+  static isLoggedIn() {
+    return !!User._getIdentity();
   }
 
-  _isLoggedIn = false;
+  static async getProfile() {
+    var profile = null;
 
-  isLoggedIn() {
-    var identity = User.getIdentity();
+    if ( User.isLoggedIn() ) {
+      profile = User._getProfile();
 
-    if ( identity ) {
-      if ( moment().diff( identity.expires, 'minutes' ) >= 10 ) {
-        return false;
+      if ( profile ) {
+        return profile;
       }
-
-      return true;
-    }
-
-    return false;
-  }
-
-  async profile() {
-    var profile;
-
-    if ( this.isLoggedIn() ) {
-      return User.getProfile();
     }
 
     await User.profile()
       .then( ( result ) => {
         profile = result;
+
         return profile;
       } )
       .catch( ( error ) => {
@@ -308,7 +315,7 @@ export { User };
 class Ideas extends API {
   static create( idea ) {
     const endpoint = this.baseEndpoint + '/ideas';
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );
@@ -338,7 +345,7 @@ class Ideas extends API {
 
   static get() {
     const endpoint = this.baseEndpoint + '/ideas';
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );
@@ -366,7 +373,7 @@ class Ideas extends API {
 
   static destroy( id ) {
     const endpoint = this.baseEndpoint + '/ideas/' + id;
-    var identity = this.getIdentity();
+    var identity = this._getIdentity();
 
     if ( !identity ) {
       return Promise.reject( new Error( 'User is not logged in' ) );

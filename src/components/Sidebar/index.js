@@ -22,7 +22,7 @@ class Sidebar extends Component {
           <Logo />
           <h1 className="cxsp-heading cxsp-sidebar__heading">The Idea Pool</h1>
         </header>
-        { this.props.isLoggedIn() && <User logoutLinkModifier="sidebar" /> }
+        { this.props.isLoggedIn() && <User logOut={ this.props.logOut } logoutLinkModifier="sidebar" /> }
       </aside>
     );
   }

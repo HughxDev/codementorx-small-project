@@ -2,6 +2,10 @@
 
 .cxsp {
   &-user {
+    &__avatar {
+      @include rem(border-radius, 100px);
+    }
+
     &__name {
       @include rem(font-size, 20px);
       @include rem(margin, 6px auto 9px);

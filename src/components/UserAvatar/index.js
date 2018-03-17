@@ -8,13 +8,19 @@ class UserAvatar extends Component {
     "height": this.size
   };
 
+  getSrcSet() {
+    const gravatarSizeParameterRegex = /([&?])s=[0-9]+/;
+
+    return `${this.props.src.replace( gravatarSizeParameterRegex, '$1s=' + this.size )} 1x, ${this.props.src.replace( gravatarSizeParameterRegex, '$1s=' + ( this.size * 2 ) )} 2x`;
+  }
+
   render() {
     return (
       <img
-        {...this.dimensions}
-        className={this.props.className}
-        src="/images/avatar.png"
-        srcSet="/images/avatar.png 1x, /images/avatar@2x.png 2x"
+        { ...this.dimensions }
+        className={ this.props.className }
+        src={ this.props.src }
+        srcSet={ this.getSrcSet() }
         alt="your avatar"
       />
     );

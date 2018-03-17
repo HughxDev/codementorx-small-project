@@ -4,7 +4,7 @@ import SignUpLogIn from '../SignUpLogIn';
 import Dashboard from '../Dashboard';
 import Promise from 'promise-polyfill';
 import 'whatwg-fetch';
-import { User, Ideas } from '../API';
+import * as API from '../API';
 import './index.css';
 
 class App extends Component {
@@ -12,41 +12,41 @@ class App extends Component {
     super( props );
 
     this.state = {
-      "isLoggedIn": false
+      "isLoggedIn": API.User.isLoggedIn()
     };
   }
 
   _testApi() {
-    User.login( {
+    API.User.logIn( {
       "email": "hugh@hughguiney.com",
       "password": "Password123"
     } )
     .then( ( result ) => {
       console.log( 'Logged in!' );
-      return User.refreshToken();
+      return API.User.refreshToken();
     } )
     .then( ( result ) => {
-      return User.profile().then( ( result ) => {
+      return API.User.profile().then( ( result ) => {
         console.log( 'Got profile!' );
         console.log( result );
       });
     } )
     .then( ( result ) => {
-      Ideas.create( {
+      API.Ideas.create( {
         "content": "the-content",
         "impact": 8,
         "ease": 8,
         "confidence": 8
       } ).then( ( result ) => {
         console.log( 'Idea created!' );
-        Ideas.get().then( ( result ) => {
+        API.Ideas.get().then( ( result ) => {
           console.log( result );
 
-          Ideas.destroy( result.pop().id ).then( ( result ) => {
+          API.Ideas.destroy( result.pop().id ).then( ( result ) => {
             console.log( 'Idea deleted!' );
             console.log( result );
 
-            Ideas.get().then( ( result ) => {
+            API.Ideas.get().then( ( result ) => {
               console.log( result );
             } );
           } )
@@ -57,14 +57,15 @@ class App extends Component {
       } )
     } )
     // .then( ( result ) => {
-    //   return User.logout().then( ( result ) => {
+    //   return API.User.Logout().then( ( result ) => {
     //     console.log( 'Logged out!' );
     //   } );
     // } );
   }
 
   isLoggedIn = () => {
-    return this.state.isLoggedIn;
+    // return this.state.isLoggedIn;
+    return API.User.isLoggedIn();
   };
 
   signUp = ( formData ) => {
@@ -74,20 +75,27 @@ class App extends Component {
   logIn = ( formData ) => {
     console.log( 'Attempting to log in' );
 
-    User.logIn( formData ).then( ( result ) => {
+    API.User.logIn( formData ).then( ( result ) => {
+      console.log( 'Logged in' );
       // console.log( result );
-      this.setState( { "isLoggedIn": true } );
+      this.setState( { "isLoggedIn": API.User.isLoggedIn() } );
     } )
     .catch( ( error ) => {
       console.log( error );
-      this.setState( { "isLoggedIn": false } );
+      this.setState( { "isLoggedIn": API.User.isLoggedIn() } );
+    } );
+  };
+
+  logOut = () => {
+    API.User.logOut().then( ( result ) => {
+      this.setState( { "isLoggedIn": API.User.isLoggedIn() } );
     } );
   };
 
   componentDidMount() {
     // this._testApi();
 
-    // var me = new User( {
+    // var me = new API.User( {
     //   "email": "hugh@hughguiney.com",
     //   "password": "Password123"
     // } );
@@ -101,7 +109,7 @@ class App extends Component {
   render() {
     return (
       <div className="cxsp-wrapper">
-        <Sidebar isLoggedIn={ this.isLoggedIn } />
+        <Sidebar isLoggedIn={ this.isLoggedIn } logOut={ this.logOut } />
         <div className="cxsp-workspace">
           <div className="cxsp-workspace__inner">
             { !this.isLoggedIn() && <SignUpLogIn signUp={ this.signUp } logIn={ this.logIn } /> }
