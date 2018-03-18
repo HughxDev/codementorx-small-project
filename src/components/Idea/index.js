@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import './index.css';
 
 class Idea extends Component {
@@ -37,6 +38,8 @@ class Idea extends Component {
       "average_score": PropTypes.number,
       "created_at": PropTypes.number,
     };
+
+    // this.transitionOptions = {};
   }
 
   static propTypes = {

@@ -13,6 +13,36 @@
     @include rem(margin-left, 22px);
   }
 
+  //cxsp-ideas__idea cxsp-ideas__idea--enter cxsp-ideas__idea--enter-active
+  &-ideas__idea {
+    &#{&}--enter > td {
+      transition: .5s;
+      // height: 0 !important
+      // padding: 0 !important;
+      top: -37px;
+      opacity: 0;
+    }
+
+    &#{&}--enter-active > td {
+      // @include rem(height, 36px !important);
+      top: 0;
+      opacity: 1;
+    }
+
+    &#{&}--exit > td {
+      transition: .5s;
+      top: 0;
+      opacity: 1;
+      // @include rem(height, 36px !important);
+    }
+
+    &#{&}--exit-active > td {
+      // height: 0 !important;
+      top: -37px;
+      opacity: 0;
+    }
+  }
+
   &-idea {
     &-action {
       &__icon {
@@ -22,9 +52,9 @@
 
     &__datum {
       @include rem(padding, ( 36px / 2 ) 0 );
+      position: relative;
 
       &--content {
-        position: relative;
         @include rem(padding-right, 48px);
 
         &::before {

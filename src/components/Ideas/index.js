@@ -1,25 +1,59 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Bulb from '../Bulb';
 import Idea from '../Idea';
 import NoIdeas from '../NoIdeas';
 import './index.css';
 
 class Ideas extends Component {
+  constructor( props ) {
+    super( props );
+
+    this.state = {
+      "isTransitioning": false,
+      // "ideas": [ ...this.props.ideas ]
+    };
+  }
+
   static propTypes = {
     "ideas": PropTypes.array,
     "updateIdea": PropTypes.func,
     "deleteIdea": PropTypes.func,
   };
 
-  hasIdeas() {
+  hasIdeas = () => {
     return ( Object.keys( this.props.ideas ).length > 0 );
   }
+
+  ideaIsBeingAdded = () => {
+    this.setState( {
+      "isTransitioning": true
+    } );
+  };
+
+  ideaWasAdded = () => {
+    this.setState( {
+      "isTransitioning": false
+    } );
+  };
+
+  ideaIsBeingRemoved = () => {
+    this.setState( {
+      "isTransitioning": true
+    } );
+  };
+
+  ideaHasBeenRemoved = () => {
+    this.setState( {
+      "isTransitioning": false
+    } );
+  };
 
   render() {
     return (
       <main className="cxsp-ideas">
-        <div hidden={ !this.hasIdeas() }>
+        <div hidden={ !this.state.isTransitioning && !this.hasIdeas() }>
           <table className="cxsp-table">
             <thead>
               <tr>
@@ -43,26 +77,39 @@ class Ideas extends Component {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <TransitionGroup component="tbody">
               { this.props.ideas.map( ( idea, key ) => {
                 // var idea = this.props.ideas[key];
                 // console.log(key);
                 return (
-                  <Idea
-                    key={ idea.id }
-                    index={ key }
-                    idea={ idea }
-                    finishIdea={ this.props.finishIdea }
-                    addIdea={ this.props.addIdea }
-                    updateIdea={ this.props.updateIdea }
-                    deleteIdea={ this.props.deleteIdea }
-                  />
+                  <CSSTransition
+                    classNames="cxsp-ideas__idea-"
+                    key={ key }
+                    timeout={ {
+                      "enter": 500,
+                      "exit": 500
+                    } }
+                    onEnter={ this.ideaIsBeingAdded }
+                    onEntered={ this.ideaWasAdded }
+                    onExit={ this.ideaIsBeingRemoved }
+                    onExited={ this.ideaHasBeenRemoved }
+                  >
+                    <Idea
+                      key={ idea.id }
+                      index={ key }
+                      idea={ idea }
+                      finishIdea={ this.props.finishIdea }
+                      addIdea={ this.props.addIdea }
+                      updateIdea={ this.props.updateIdea }
+                      deleteIdea={ this.props.deleteIdea }
+                    />
+                  </CSSTransition>
                 );
               } ) }
-            </tbody>
+            </TransitionGroup>
           </table>
         </div>
-        <NoIdeas hidden={ this.hasIdeas() } />
+        <NoIdeas hidden={ this.state.isTransitioning || this.hasIdeas() } />
       </main>
     );
   }
