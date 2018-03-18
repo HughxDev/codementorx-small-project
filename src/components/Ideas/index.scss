@@ -6,7 +6,7 @@
 
 .cxsp {
   &-ideas {
-    $header-height-with-border: $header-height + 2px;
+    $header-height-with-border: $header-total-height + 2px;
     height: calc( 100% - #{$header-height-with-border} );
     height: calc( 100% - #{rem($header-height-with-border)} );
     // background: rgba(255,255,0,0.5);

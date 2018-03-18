@@ -46,13 +46,14 @@ class Ideas extends Component {
             <tbody>
               { this.props.ideas.map( ( idea, key ) => {
                 // var idea = this.props.ideas[key];
-                console.log(key);
+                // console.log(key);
                 return (
                   <Idea
-                    key={ key }
+                    key={ idea.id }
                     index={ key }
                     idea={ idea }
-                    ideas={ this.props.ideas }
+                    finishIdea={ this.props.finishIdea }
+                    addIdea={ this.props.addIdea }
                     updateIdea={ this.props.updateIdea }
                     deleteIdea={ this.props.deleteIdea }
                   />

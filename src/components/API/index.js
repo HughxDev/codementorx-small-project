@@ -121,6 +121,7 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
+        console.log( 'User created!' );
         this._setIdentity( result );
         return result;
       } )
@@ -146,6 +147,7 @@ class User extends API {
       .then( this.parseJSON )
       // .then( this._setIdentity )
       .then( ( result ) => {
+        console.log( 'Logged in!' );
         this._setIdentity( result );
         return result;
       } )
@@ -181,6 +183,7 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
+        console.log( 'Logged out!' );
         this._clearIdentity();
         return result;
       } )
@@ -190,7 +193,7 @@ class User extends API {
         if ( this.isUnauthorizedError( error ) ) {
           console.log( 'Unauthorized!' );
           // this._clearIdentity();
-          return this.refreshToken().then( ( newIdentity ) => {
+          return User.refreshToken().then( ( newIdentity ) => {
             return User.logOut();
           } );
         }
@@ -258,6 +261,7 @@ class User extends API {
       .then( this.checkStatus )
       .then( this.parseJSON )
       .then( ( result ) => {
+        console.log( 'Fetched profile!' );
         this._setProfile( result );
         return result;
       } )
@@ -266,7 +270,7 @@ class User extends API {
           console.log( 'Unauthorized!' );
 
           // this._clearIdentity();
-          this.refreshToken().then( ( newIdentity ) => {
+          User.refreshToken().then( ( newIdentity ) => {
             return User.profile();
           } );
         }
@@ -336,15 +340,75 @@ class Ideas extends API {
       )
       .then( this.checkStatus )
       .then( this.parseJSON )
-      .then( ( result ) => { return result; } )
+      .then( ( result ) => {
+        console.log( 'Idea created!' );
+        console.log( result );
+
+        return result;
+      } )
       .catch( ( error ) => {
         console.log( error );
+
+        if ( this.isUnauthorizedError( error ) ) {
+          console.log( 'Unauthorized!' );
+          // this._clearIdentity();
+          return User.refreshToken().then( ( newIdentity ) => {
+            return Ideas.create( idea );
+          } );
+        }
       } )
     );
-  }
+  } // /create
 
-  static get() {
-    const endpoint = this.baseEndpoint + '/ideas';
+  static update( id, idea ) {
+    const endpoint = this.baseEndpoint + `/ideas/${id}`;
+    var identity = this._getIdentity();
+
+    if ( !identity ) {
+      return Promise.reject( new Error( 'User is not logged in' ) );
+    }
+
+    return (
+      fetch(
+        endpoint,
+        {
+          ...this.defaultFetchOptions,
+          "method": "PUT",
+          "headers": {
+            "Content-Type": "application/json",
+            "X-Access-Token": identity.jwt
+          },
+          "body": JSON.stringify( idea )
+        }
+      )
+      .then( this.checkStatus )
+      .then( this.parseJSON )
+      .then( ( result ) => {
+        console.log( 'Idea updated!' );
+        console.log( result );
+
+        return result;
+      } )
+      .catch( ( error ) => {
+        console.log( error );
+
+        if ( this.isUnauthorizedError( error ) ) {
+          console.log( 'Unauthorized!' );
+          // this._clearIdentity();
+          return User.refreshToken().then( ( newIdentity ) => {
+            return Ideas.update( id, idea );
+          } );
+        }
+      } )
+    );
+  } // /update
+
+  static get( page ) {
+    if ( !Number.isNaN( parseInt( page ) ) && page <= 0 ) {
+      return Promise.reject( new Error( 'Parameter `page` must be greater than zero' ) );
+    }
+
+    const endpoint = this.baseEndpoint + '/ideas' + ( page ? `?page=${page}` : '' );
     var identity = this._getIdentity();
 
     if ( !identity ) {
@@ -364,12 +428,25 @@ class Ideas extends API {
       )
       .then( this.checkStatus )
       .then( this.parseJSON )
-      .then( ( result ) => { return result; } )
+      .then( ( result ) => {
+        console.log( 'Fetched ideas!' );
+        console.log( result );
+
+        return result;
+      } )
       .catch( ( error ) => {
         console.log( error );
+
+        if ( this.isUnauthorizedError( error ) ) {
+          console.log( 'Unauthorized!' );
+          // this._clearIdentity();
+          return User.refreshToken().then( ( newIdentity ) => {
+            return Ideas.get();
+          } );
+        }
       } )
     );
-  }
+  } // /get
 
   static destroy( id ) {
     const endpoint = this.baseEndpoint + '/ideas/' + id;
@@ -393,12 +470,25 @@ class Ideas extends API {
       )
       .then( this.checkStatus )
       .then( this.parseJSON )
-      .then( ( result ) => { return result; } )
+      .then( ( result ) => {
+        console.log( 'Idea deleted!' );
+        console.log( result );
+
+        return result;
+      } )
       .catch( ( error ) => {
         console.log( error );
+
+        if ( this.isUnauthorizedError( error ) ) {
+          console.log( 'Unauthorized!' );
+          // this._clearIdentity();
+          return User.refreshToken().then( ( newIdentity ) => {
+            return Ideas.destroy( id );
+          } );
+        }
       } )
     );
-  }
+  } // /destroy
 }
 
 export { Ideas };

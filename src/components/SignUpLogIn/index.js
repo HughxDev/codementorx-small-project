@@ -77,7 +77,7 @@ class SignUpLogIn extends Component {
         <form className="cxsp-form cxsp-authenticate__form" onSubmit={ this.handleSubmit }>
           <div className="cxsp-form-group" hidden={ !this.isSignUpDialog() }>
             <input
-              className="cxsp-form-control"
+              className="cxsp-form-control cxsp-form-control--text"
               type="text"
               name="name"
               placeholder="Name"
@@ -90,7 +90,7 @@ class SignUpLogIn extends Component {
           </div>
           <div className="cxsp-form-group">
             <input
-              className="cxsp-form-control"
+              className="cxsp-form-control cxsp-form-control--text"
               type="email"
               name="email"
               placeholder="Email"
@@ -102,7 +102,7 @@ class SignUpLogIn extends Component {
           </div>
           <div className="cxsp-form-group">
             <input
-              className="cxsp-form-control"
+              className="cxsp-form-control cxsp-form-control--text"
               type="password"
               name="password"
               minLength="8"

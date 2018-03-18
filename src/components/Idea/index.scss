@@ -25,6 +25,7 @@
 
       &--content {
         position: relative;
+        @include rem(padding-right, 48px);
 
         &::before {
           content: '•';
@@ -55,11 +56,5 @@
         @include rem(height, 18px);
       }
     }
-  }
-
-  &-form-control#{&}-form-control--text#{&}-form-control--idea-content {
-    @include rem(padding-bottom, 11px);
-    @include rem(height, (25px + 2px + 10px + 1px));
-    @include rem(margin-bottom, 1px);
   }
 }
