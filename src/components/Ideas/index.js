@@ -9,17 +9,6 @@ import './index.css';
 
 Modal.setAppElement( document.getElementById( 'root' ) );
 
-const modalStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
 class Ideas extends Component {
   constructor( props ) {
     super( props );
@@ -120,14 +109,17 @@ class Ideas extends Component {
           isOpen={ this.state.modalIsOpen }
           onAfterOpen={ this.afterOpenModal }
           onRequestClose={ this.closeModal }
-          style={ modalStyles }
           contentLabel="Confirm Deletion"
+          className="cxsp-modal"
+          overlayClassName="cxsp-modal-overlay"
         >
-          <h2>Are you sure?</h2>
-          <p>This idea will be permanently deleted.</p>
-          <div className="cxsp-button-group">
-            <button onClick={ this.state.cancelDeleteCallback }>Cancel</button>
-            <button onClick={ this.state.confirmDeleteCallback }>OK</button>
+          <h2 className="cxsp-heading cxsp-modal__heading">Are you sure?</h2>
+          <div className="cxsp-modal__info">
+            <p>This idea will be permanently deleted.</p>
+          </div>
+          <div className="cxsp-button-group cxsp-modal__button-group">
+            <button className="cxsp-button cxsp-button--inverted cxsp-button--inverted-muted cxsp-modal__button" onClick={ this.state.cancelDeleteCallback }>Cancel</button>
+            <button className="cxsp-button cxsp-button--inverted cxsp-modal__button" onClick={ this.state.confirmDeleteCallback }>OK</button>
           </div>
         </Modal>
         <table hidden={ !this.state.isTransitioning && !this.hasIdeas() }>

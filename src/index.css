@@ -28,6 +28,11 @@ a {
   font-size: 14px;
   font-size: 0.875rem;
   font-style: normal; }
+  .cxsp-button.cxsp-button--inverted {
+    background-color: white;
+    color: #00A843; }
+    .cxsp-button.cxsp-button--inverted.cxsp-button.cxsp-button--inverted-muted {
+      color: black; }
 
 .cxsp-table {
   border-collapse: collapse; }
@@ -109,6 +114,68 @@ a {
   .cxsp-button-group.cxsp-button-group--modify:hover .cxsp-button,
   .cxsp-button-group.cxsp-button-group--modify .cxsp-button:focus {
     opacity: 1; }
+
+.cxsp-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1.25rem 0 rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  border-radius: 0.1875rem;
+  width: 400px;
+  width: 25rem;
+  height: 250px;
+  height: 15.625rem;
+  text-align: center;
+  padding: 30px 30px 25px;
+  padding: 1.875rem 1.875rem 1.5625rem;
+  display: flex;
+  flex-direction: column; }
+  .cxsp-modal__heading {
+    margin: 0 0 36px;
+    margin: 0 0 2.25rem;
+    font-size: 24px;
+    font-size: 1.5rem; }
+  .cxsp-modal__info {
+    letter-spacing: -0.1px;
+    letter-spacing: -0.00625rem;
+    line-height: 16px;
+    line-height: 1rem;
+    flex: 1; }
+    .cxsp-modal__info p:first-child {
+      margin-top: 0; }
+    .cxsp-modal__info p:last-child {
+      margin-bottom: 0; }
+  .cxsp-modal__button-group {
+    width: 50.75%;
+    width: 50.75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto; }
+  .cxsp-modal__button {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    font-size: 1.125rem;
+    letter-spacing: -0.11px;
+    letter-spacing: -0.00688rem;
+    height: 24px;
+    height: 1.5rem;
+    padding: 0;
+    padding: 0; }
+  .cxsp-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25); }
 
 .cxsp-visually-hidden {
   border: 0;

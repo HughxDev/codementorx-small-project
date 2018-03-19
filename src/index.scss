@@ -52,6 +52,15 @@ a {
     text-transform: uppercase;
     @include rem(font-size, 14px);
     font-style: normal;
+
+    &#{&}--inverted {
+      background-color: white;
+      color: $green;
+
+      &#{&}-muted {
+        color: black;
+      }
+    }
   }
 
   &-table {
@@ -147,6 +156,69 @@ a {
       .cxsp-button:focus {
         opacity: 1;
       }
+    }
+  }
+
+  &-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    @include rem(box-shadow, 0 0 20px 0 rgba(0,0,0,0.30));
+    @include rem(border-radius, 3px);
+    @include rem(width, 400px);
+    @include rem(height, 250px);
+    text-align: center;
+    @include rem(padding, 30px 30px 25px);
+    display: flex;
+    flex-direction: column;
+
+    &__heading {
+      @include rem(margin, 0 0 36px);
+      @include rem(font-size, 24px);
+    }
+
+    &__info {
+      @include rem(letter-spacing, -0.1px);
+      @include rem(line-height, 16px);
+      flex: 1;
+
+      p:first-child {
+        margin-top: 0;
+      }
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__button-group {
+      @include rem(width, ( 203px / 400px ) * 100% );
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+    }
+
+    &__button {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 600;
+      @include rem(font-size, 18px);
+      @include rem(letter-spacing, -0.11px);
+      @include rem(height, 24px);
+      @include rem(padding, 0);
+    }
+
+    &-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.25);
     }
   }
 
