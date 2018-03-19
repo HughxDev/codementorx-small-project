@@ -16,40 +16,55 @@ class Dashboard extends Component {
   }
 
   beginIdea = () => {
-    var idea = {
-      "id": `temp-${Date.now()}`,
-      "content": "",
+    var blankIdea = {
+      // "id": `temp-${Date.now()}`,
+      // "id": `temp-${ Math.random().toString().replace( '.', '' ) }`,
+      "content": "[blank content]",
       "impact": 10,
       "ease": 10,
       "confidence": 10,
       "average_score": 10,
-      "created_at": 0
+      "created_at": 0,
+      // "_isNew": true
     };
+    // ideas.unshift( idea );
+    // this.setState( { ideas } );
+    // return Promise.resolve( ideas ); //this.state.ideas
 
-    const ideas = [ ...this.state.ideas ];
-    ideas.unshift( idea );
+    return API.Ideas.create( blankIdea ).then( ( idea ) => {
+      const ideas = [ ...this.state.ideas ];
+      idea.content = '';
+      idea._isNew = true;
+      ideas.unshift( idea );
+      this.setState( { ideas } );
 
-    // console.log( ideas );
-
-    this.setState( { ideas } );
+      return this.state.ideas;
+    } );
   };
 
-  finishIdea = ( key, idea ) => {
-    const ideas = [ ...this.state.ideas ];
-
-    API.Ideas.create( idea ).then( ( result ) => {
-      ideas[key] = result; // will contain actual id, created_at
-
-      this.setState( { ideas } );
-    } );
-  }
+  // finishIdea = ( index, idea ) => {
+  //   // const ideas = [ ...this.state.ideas ];
+  //
+  //   // if ( idea.content  )
+  //
+  //   // return API.Ideas.create( idea ).then( ( result ) => {
+  //   //   // console.log( 'finishIdea → then' );
+  //   //   // console.log( 'index', index );
+  //   //
+  //   //   ideas[index] = result; // will contain actual id, created_at
+  //   //   this.setState( { ideas } );
+  //   //   return this.state.ideas;
+  //   // } );
+  //   return this.updateIdea( index, idea );
+  // }
 
   addIdea = ( idea ) => {
     const ideas = [ ...this.state.ideas ];
     ideas.unshift( idea );
 
-    API.Ideas.create( idea ).then( () => {
+    return API.Ideas.create( idea ).then( () => {
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
@@ -57,14 +72,20 @@ class Dashboard extends Component {
     const ideas = [ ...this.state.ideas ];
     ideas[key] = updatedIdea;
 
-    API.Ideas.update( key, updatedIdea ).then( () => {
+    return API.Ideas.update( key, updatedIdea ).then( () => {
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
   getIdeas = () => {
-    API.Ideas.get().then( ( ideas ) => {
+    return API.Ideas.get().then( ( ideas ) => {
+      ideas = ideas.map( ( idea ) => {
+        idea._isNew = false;
+        return idea;
+      } );
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
@@ -73,12 +94,14 @@ class Dashboard extends Component {
     ideas.splice( key, 1 );
 
     if ( id ) {
-      API.Ideas.destroy( id ).then( () => {
+      return API.Ideas.destroy( id ).then( () => {
         this.setState( { ideas } );
+        return this.state.ideas;
       } );
-    } else {
-      this.setState( { ideas } );
     }
+
+    this.setState( { ideas } );
+    return Promise.resolve( this.state.ideas );
   };
 
   componentDidMount() {
@@ -88,12 +111,9 @@ class Dashboard extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header
-          beginIdea={ this.beginIdea }
-          ideas={ this.state.ideas }
-        />
+        <Header beginIdea={ this.beginIdea } />
         <Ideas
-          finishIdea={ this.finishIdea }
+          // finishIdea={ this.finishIdea }
           addIdea={ this.addIdea }
           updateIdea={ this.updateIdea }
           deleteIdea={ this.deleteIdea }
