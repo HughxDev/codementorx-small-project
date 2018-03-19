@@ -2,6 +2,10 @@
   "name": "codementorx-small-project",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/hguiney/codementorx-small-project.git"
+  },
   "dependencies": {
     "moment": "^2.21.0",
     "node-sass-chokidar": "^1.1.0",
