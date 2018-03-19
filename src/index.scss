@@ -169,7 +169,7 @@ a {
     background-color: white;
     @include rem(box-shadow, 0 0 20px 0 rgba(0,0,0,0.30));
     @include rem(border-radius, 3px);
-    @include rem(width, 400px);
+    @include rem(width, $modal-nominal-width);
     @include rem(height, 250px);
     text-align: center;
     @include rem(padding, 30px 30px 25px);
@@ -196,7 +196,7 @@ a {
     }
 
     &__button-group {
-      @include rem(width, ( 203px / 400px ) * 100% );
+      @include rem(width, ( $modal-button-group-nominal-width / $modal-nominal-width ) * 100% );
       display: flex;
       align-items: center;
       justify-content: space-between;
