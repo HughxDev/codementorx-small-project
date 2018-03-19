@@ -14,13 +14,15 @@
     "react-scripts": "1.1.1",
     "react-transition-group": "^2.2.1",
     "sass-rem": "^2.0.1",
+    "serve": "^6.5.3",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "serve --single ./build",
+    "dev": "npm-run-all -p watch-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
