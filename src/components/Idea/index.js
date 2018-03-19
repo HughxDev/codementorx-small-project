@@ -7,20 +7,44 @@ class Idea extends Component {
   constructor( props ) {
     super( props );
 
-    this.hasNoId = () => {
+    this.getIdea = () => {
       var idea;
 
-      if ( ( 'state' in this ) && this.state.idea ) {
-        idea = this.state.idea;
+      if ( ( 'state' in this ) && this.state.prospectiveIdea ) {
+        idea = this.state.prospectiveIdea;
       } else {
         idea = this.props.idea;
       }
 
+      return idea;
+    };
+
+    this.hasNoId = () => {
+      var idea = this.getIdea();
+
       return ( !idea.hasOwnProperty( 'id' ) || !idea.id || ( idea.id.indexOf( 'temp-' ) === 0 ) );
     };
 
+    this.hasPlaceholderContent = () => {
+      var idea = this.getIdea();
+
+      return ( idea.content.trim() === '[blank content]' );
+    };
+
+    this.hasNoContent = () => {
+      var idea = this.getIdea();
+
+      return ( !idea.hasOwnProperty( 'content' ) || !idea.content || ( `${idea.content}`.trim().length === 0 ) || this.hasPlaceholderContent() );
+    };
+
+    this.isNew = () => {
+      var idea = this.getIdea();
+
+      return !!idea._isNew;
+    };
+
     this.state = {
-      "isBeingEdited": this.hasNoId(),
+      "isBeingEdited": this.isNew(),
       "prospectiveIdea": {
         ...this.props.idea
       },
@@ -37,16 +61,17 @@ class Idea extends Component {
       "confidence": PropTypes.number,
       "average_score": PropTypes.number,
       "created_at": PropTypes.number,
+      "_isNew": PropTypes.bool,
     };
-
-    // this.transitionOptions = {};
   }
 
   static propTypes = {
+    "index": PropTypes.number,
     "idea": PropTypes.shape( this._ideaShape ),
-    "ideas": PropTypes.arrayOf( PropTypes.shape( this._ideaShape ) ),
-    "updateIdea": PropTypes.func, // Owned by Dashboard
-    "deleteIdea": PropTypes.func, // Owned by Dashboard
+    "addIdea": PropTypes.func, // Owner: Dashboard
+    "updateIdea": PropTypes.func, // Owner: Dashboard
+    "deleteIdea": PropTypes.func, // Owner: Dashboard
+    "openDeleteConfirmationDialog": PropTypes.func, // Owner: Ideas
   };
 
   handleChange = ( event ) => {
@@ -65,24 +90,31 @@ class Idea extends Component {
       [ event.currentTarget.name ]: value
     };
 
-    // console.log( 'event.currentTarget.name', event.currentTarget.name );
-    // console.log( 'value', value );
-    // console.log( 'updatedIdea', updatedIdea );
-
     this.setState( {
+      ...this.state,
       "prospectiveIdea": updatedIdea
     } );
   };
 
   handleEdit = () => {
+    var prospectiveIdea = {
+      ...this.state.prospectiveIdea
+    };
+
+    if ( this.hasPlaceholderContent() ) {
+      prospectiveIdea.content = '';
+    }
+
     this.setState( {
+      ...this.state,
+      prospectiveIdea,
       "isBeingEdited": true
     } );
   };
 
   handleDelete = () => {
-    if ( this.hasNoId() ) {
-      this.props.deleteIdea( this.props.index );
+    if ( this.hasNoContent() && this.isNew() ) {
+      this.props.deleteIdea( this.props.index, this.state.idea.id );
     } else {
       // @todo: Trigger alert
       this.props.openDeleteConfirmationDialog( () => {
@@ -91,45 +123,38 @@ class Idea extends Component {
     }
 
     this.setState( {
+      ...this.state,
       "isBeingEdited": false,
     } );
   };
 
   handleAccept = () => {
-    // if ( this.hasNoContent() ) {
-    //   // trigger error
-    // }
+    var newIdea = {
+      ...this.state.prospectiveIdea,
+      "_isNew": false,
+    };
 
-    if ( this.hasNoId() ) {
-      // console.log( this.state.prospectiveIdea );
-      // this.props.deleteIdea( this.props.index );
-      // this.props.addIdea( this.state.prospectiveIdea );
-      this.props.finishIdea( this.props.index, this.state.prospectiveIdea ).then( ( newIdeasState ) => {
-        // console.log( 'newIdeasState', newIdeasState );
-      } );
-    } else {
-      this.props.updateIdea( this.state.idea.id, this.state.prospectiveIdea ).then( ( result ) => {
-        // console.log( 'i don’t fucking know' );
-      } );
+    if ( this.hasNoContent() ) {
+      newIdea.content = "[blank content]";
     }
 
+    this.props.updateIdea( this.state.idea.id, newIdea );
+      //.then( ( result ) => {} );
+
     this.setState( {
+      ...this.state,
       "isBeingEdited": false,
       // "prospectiveIdea": this.state.idea
-      "idea": this.state.prospectiveIdea
+      "idea": newIdea
     } );
   };
 
   handleCancel = ( event ) => {
-    /*
-      If user presses Cancel on a new idea that hasn’t
-      been submitted to the server and has blank content,
-      remove it
-    */
-    if ( this.hasNoId() && ( this.state.prospectiveIdea.content.trim() === '' ) ) {
+    if ( this.hasNoContent() && this.isNew() ) {
       this.handleDelete();
     } else {
       this.setState( {
+        ...this.state,
         "isBeingEdited": false,
         "prospectiveIdea": this.state.idea
       } );

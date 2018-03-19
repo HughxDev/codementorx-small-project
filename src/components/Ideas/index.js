@@ -26,7 +26,6 @@ class Ideas extends Component {
 
     this.state = {
       "isTransitioning": false,
-      // "ideas": [ ...this.props.ideas ]
       "modalIsOpen": false,
       "confirmDeleteCallback": this.defaultConfirmDeleteCallback,
       "cancelDeleteCallback": this.defaultCancelDeleteCallback,
@@ -122,7 +121,7 @@ class Ideas extends Component {
           onAfterOpen={ this.afterOpenModal }
           onRequestClose={ this.closeModal }
           style={ modalStyles }
-          contentLabel="Example Modal"
+          contentLabel="Confirm Deletion"
         >
           <h2>Are you sure?</h2>
           <p>This idea will be permanently deleted.</p>
@@ -131,65 +130,59 @@ class Ideas extends Component {
             <button onClick={ this.state.confirmDeleteCallback }>OK</button>
           </div>
         </Modal>
-        <div hidden={ !this.state.isTransitioning && !this.hasIdeas() }>
-          <table className="cxsp-table">
-            <thead>
-              <tr>
-                <th className="cxsp-table-heading cxsp-ideas__column-content" scope="col">
-                  <span className="cxsp-visually-hidden">Content</span>
-                </th>
-                <th className="cxsp-table-heading cxsp-ideas__column-impact" scope="col">
-                  Impact
-                </th>
-                <th className="cxsp-table-heading cxsp-ideas__column-ease" scope="col" scope="col">
-                  Ease
-                </th>
-                <th className="cxsp-table-heading cxsp-ideas__column-confidence" scope="col" scope="col">
-                  Confidence
-                </th>
-                <th className="cxsp-table-heading cxsp-ideas__column-average" scope="col">
-                  <abbr>Avg.</abbr>
-                </th>
-                <th className="cxsp-table-heading cxsp-ideas__column-actions" scope="col">
-                  <span className="cxsp-visually-hidden">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            {/* <tbody> */}
-            <TransitionGroup component="tbody">
-              { this.props.ideas.map( ( idea, key ) => {
-                // var idea = this.props.ideas[key];
-                // console.log( 'key', key );
-                return (
-                  <CSSTransition
-                    classNames="cxsp-ideas__idea-"
-                    key={ key }
-                    timeout={ {
-                      "enter": 500,
-                      "exit": 500
-                    } }
-                    onEnter={ this.ideaIsBeingAdded }
-                    onEntered={ this.ideaWasAdded }
-                    onExit={ this.ideaIsBeingRemoved }
-                    onExited={ this.ideaHasBeenRemoved }
-                  >
-                    <Idea
-                      key={ idea.id }
-                      index={ key }
-                      idea={ idea }
-                      finishIdea={ this.props.finishIdea }
-                      addIdea={ this.props.addIdea }
-                      updateIdea={ this.props.updateIdea }
-                      deleteIdea={ this.props.deleteIdea }
-                      openDeleteConfirmationDialog={ this.openDeleteConfirmationDialog }
-                    />
-                  </CSSTransition>
-                );
-              } ) }
-            </TransitionGroup>
-            {/* </tbody> */}
-          </table>
-        </div>
+        <table hidden={ !this.state.isTransitioning && !this.hasIdeas() }>
+          <thead>
+            <tr>
+              <th className="cxsp-table-heading cxsp-ideas__column-content" scope="col">
+                <span className="cxsp-visually-hidden">Content</span>
+              </th>
+              <th className="cxsp-table-heading cxsp-ideas__column-impact" scope="col">
+                Impact
+              </th>
+              <th className="cxsp-table-heading cxsp-ideas__column-ease" scope="col" scope="col">
+                Ease
+              </th>
+              <th className="cxsp-table-heading cxsp-ideas__column-confidence" scope="col" scope="col">
+                Confidence
+              </th>
+              <th className="cxsp-table-heading cxsp-ideas__column-average" scope="col">
+                <abbr>Avg.</abbr>
+              </th>
+              <th className="cxsp-table-heading cxsp-ideas__column-actions" scope="col">
+                <span className="cxsp-visually-hidden">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <TransitionGroup component="tbody">
+            { this.props.ideas.map( ( idea, key ) => {
+              return (
+                <CSSTransition
+                  classNames="cxsp-ideas__idea-"
+                  key={ idea.id }
+                  timeout={ {
+                    "enter": 500,
+                    "exit": 500
+                  } }
+                  onEnter={ this.ideaIsBeingAdded }
+                  onEntered={ this.ideaWasAdded }
+                  onExit={ this.ideaIsBeingRemoved }
+                  onExited={ this.ideaHasBeenRemoved }
+                  unmountOnExit={ true }
+                >
+                  <Idea
+                    key={ idea.id }
+                    index={ key }
+                    idea={ idea }
+                    addIdea={ this.props.addIdea }
+                    updateIdea={ this.props.updateIdea }
+                    deleteIdea={ this.props.deleteIdea }
+                    openDeleteConfirmationDialog={ this.openDeleteConfirmationDialog }
+                  />
+                </CSSTransition>
+              );
+            } ) }
+          </TransitionGroup>
+        </table>
         <NoIdeas hidden={ this.state.isTransitioning || this.hasIdeas() } />
       </main>
     );
