@@ -8,13 +8,13 @@ import * as API from '../API';
 import './index.css';
 
 class App extends Component {
-  constructor( props ) {
-    super( props );
-
-    this.state = {
-      "isLoggedIn": API.User.isLoggedIn()
-    };
-  }
+  // constructor( props ) {
+  //   super( props );
+  //
+  //   this.state = {
+  //     "isLoggedIn": API.User.isLoggedIn()
+  //   };
+  // }
 
   _testApi() {
     API.User.logIn( {
@@ -92,18 +92,12 @@ class App extends Component {
     } );
   };
 
-  componentDidMount() {
-    // this._testApi();
+  constructor() {
+    super();
 
-    // var me = new API.User( {
-    //   "email": "hugh@hughguiney.com",
-    //   "password": "Password123"
-    // } );
-
-    // me.profile().then( ( result ) => {
-    //   console.log( result );
-    //   return result;
-    // } );
+    this.state = {
+      "isLoggedIn": API.User.isLoggedIn(),
+    };
   }
 
   render() {

@@ -85,7 +85,9 @@ class Idea extends Component {
       this.props.deleteIdea( this.props.index );
     } else {
       // @todo: Trigger alert
-      this.props.deleteIdea( this.props.index, this.state.idea.id );
+      this.props.openDeleteConfirmationDialog( () => {
+        this.props.deleteIdea( this.props.index, this.state.idea.id );
+      } );
     }
 
     this.setState( {
@@ -94,13 +96,21 @@ class Idea extends Component {
   };
 
   handleAccept = () => {
+    // if ( this.hasNoContent() ) {
+    //   // trigger error
+    // }
+
     if ( this.hasNoId() ) {
       // console.log( this.state.prospectiveIdea );
       // this.props.deleteIdea( this.props.index );
       // this.props.addIdea( this.state.prospectiveIdea );
-      this.props.finishIdea( this.state.idea.id, this.state.prospectiveIdea );
+      this.props.finishIdea( this.props.index, this.state.prospectiveIdea ).then( ( newIdeasState ) => {
+        // console.log( 'newIdeasState', newIdeasState );
+      } );
     } else {
-      this.props.updateIdea( this.state.idea.id, this.state.prospectiveIdea );
+      this.props.updateIdea( this.state.idea.id, this.state.prospectiveIdea ).then( ( result ) => {
+        // console.log( 'i don’t fucking know' );
+      } );
     }
 
     this.setState( {
@@ -214,6 +224,7 @@ class Idea extends Component {
               className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--accept"
               title="Accept"
               onClick={ this.handleAccept }
+              disabled={ !this.state.isBeingEdited }
             >
               <img
                 className="cxsp-idea-action__icon"
@@ -228,7 +239,7 @@ class Idea extends Component {
               className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--cancel"
               title="Cancel"
               onClick={ this.handleCancel }
-              hidden={ !this.state.isBeingEdited }
+              disabled={ !this.state.isBeingEdited }
             >
               <img
                 className="cxsp-idea-action__icon"
@@ -245,6 +256,7 @@ class Idea extends Component {
               className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--edit"
               title="Edit"
               onClick={ this.handleEdit }
+              disabled={ this.state.isBeingEdited }
             >
               <img
                 className="cxsp-idea-action__icon"
@@ -259,6 +271,7 @@ class Idea extends Component {
               className="cxsp-button cxsp-button--idea-action cxsp-idea__action cxsp-idea__action--delete"
               title="Delete"
               onClick={ this.handleDelete }
+              disabled={ this.state.isBeingEdited }
             >
               <img
                 className="cxsp-idea-action__icon"

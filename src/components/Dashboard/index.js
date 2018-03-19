@@ -17,7 +17,8 @@ class Dashboard extends Component {
 
   beginIdea = () => {
     var idea = {
-      "id": `temp-${Date.now()}`,
+      // "id": `temp-${Date.now()}`,
+      "id": `temp-${ Math.random().toString().replace( '.', '' ) }`,
       "content": "",
       "impact": 10,
       "ease": 10,
@@ -32,15 +33,19 @@ class Dashboard extends Component {
     // console.log( ideas );
 
     this.setState( { ideas } );
+    return Promise.resolve( this.state.ideas );
   };
 
-  finishIdea = ( key, idea ) => {
+  finishIdea = ( index, idea ) => {
     const ideas = [ ...this.state.ideas ];
 
-    API.Ideas.create( idea ).then( ( result ) => {
-      ideas[key] = result; // will contain actual id, created_at
+    return API.Ideas.create( idea ).then( ( result ) => {
+      // console.log( 'finishIdea → then' );
+      // console.log( 'index', index );
 
+      ideas[index] = result; // will contain actual id, created_at
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   }
 
@@ -48,8 +53,9 @@ class Dashboard extends Component {
     const ideas = [ ...this.state.ideas ];
     ideas.unshift( idea );
 
-    API.Ideas.create( idea ).then( () => {
+    return API.Ideas.create( idea ).then( () => {
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
@@ -57,14 +63,16 @@ class Dashboard extends Component {
     const ideas = [ ...this.state.ideas ];
     ideas[key] = updatedIdea;
 
-    API.Ideas.update( key, updatedIdea ).then( () => {
+    return API.Ideas.update( key, updatedIdea ).then( () => {
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
   getIdeas = () => {
-    API.Ideas.get().then( ( ideas ) => {
+    return API.Ideas.get().then( ( ideas ) => {
       this.setState( { ideas } );
+      return this.state.ideas;
     } );
   };
 
@@ -73,12 +81,14 @@ class Dashboard extends Component {
     ideas.splice( key, 1 );
 
     if ( id ) {
-      API.Ideas.destroy( id ).then( () => {
+      return API.Ideas.destroy( id ).then( () => {
         this.setState( { ideas } );
+        return this.state.ideas;
       } );
-    } else {
-      this.setState( { ideas } );
     }
+
+    this.setState( { ideas } );
+    return Promise.resolve( this.state.ideas );
   };
 
   componentDidMount() {
