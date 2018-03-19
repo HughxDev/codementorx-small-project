@@ -1,0 +1,24 @@
+@import 'styles/index';
+
+.cxsp {
+  &-ideas {
+    &__no-ideas {
+      // target: 246px
+      $top: ( ( $noideas-nominal-top-spacing - $header-margin-bottom ) / $ideas-nominal-height ) * 100%; //* 97.82%
+
+      text-align: center;
+      max-width: $line-length;
+      position: absolute;
+      top: $top;
+      // padding-top: $top;// auto 0;
+      margin: 0 auto;
+      width: 100%;
+      min-width: 100%;
+    }
+  }
+
+  &-no-ideas__p {
+    color: $blue-gray--adjusted;
+    @include rem(font-size, 20px);
+  }
+}

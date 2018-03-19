@@ -1,0 +1,29 @@
+@import 'styles/index';
+
+.cxsp {
+  &-sidebar {
+    $width: ( ( $sidebar-nominal-width / $screen-nominal-width ) * 100% );
+
+    color: white;
+    text-align: center;
+    background-color: $green;
+    @include rem(padding, 37px 27px);
+    width: $width;
+    flex: ( $width / 1% );
+
+    &__header {
+      &#{&}--logged-in {
+        // Border weight is 1px, but it occupies 3px in the mockup,
+        // so redistributing 1px each to padding and margin to even out
+        @include rem(border-bottom, 1px solid rgba(255,255,255,0.2));
+        @include rem(padding-bottom, 41px + 1px);
+        @include rem(margin-bottom, 37px + 1px);
+      }
+    }
+
+    &__heading {
+      @include rem(font-size, 16px);
+      @include rem(margin, 13px auto 0);
+    }
+  }
+}

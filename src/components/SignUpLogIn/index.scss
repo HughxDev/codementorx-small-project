@@ -1,0 +1,52 @@
+@import 'styles/index';
+
+.cxsp {
+  // &-wrapper {
+  //   display: flex;
+  //   flex-direction: row;
+  //   height: 100%;
+  // }
+  &-authenticate {
+    @include rem(max-width, 485.2px);
+    margin: 0 auto;
+
+    &#{&}--sign-up {
+      $top: ( $sign-up-nominal-top-spacing / $screen-nominal-height ) * 100%;
+      padding-top: $top;
+    }
+
+    &#{&}--log-in {
+      $top: ( $log-in-nominal-top-spacing / $screen-nominal-height ) * 100%;
+      padding-top: $top;
+    }
+
+    &__heading {
+      margin: 0 auto;
+      @include rem(font-size, 40px);
+      // color: #2A3842;
+      text-align: center;
+    }
+
+    &__form {
+      @include rem(margin-top, 62px);
+    }
+
+    &__submit,
+    &__switch-mode {
+      display: inline-block;
+    }
+
+    &__submit {
+      @include rem(width, 151px);
+      @include rem(height, 40px);
+    }
+
+    &__switch-mode {
+      @include rem(font-size, 16px);
+      text-align: right;
+      width: calc( 100% - 151px );
+      width: calc( 100% - #{rem(151px)} );
+      @include rem(margin, 9px 0);
+    }
+  }
+}

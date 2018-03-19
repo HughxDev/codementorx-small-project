@@ -1,0 +1,22 @@
+@import 'styles/index';
+
+.cxsp {
+  &-user {
+    &__avatar {
+      @include rem(border-radius, 100px);
+    }
+
+    &__name {
+      @include rem(font-size, 20px);
+      @include rem(margin, 6px auto 9px);
+    }
+
+    &__logout-link {
+      @include rem(font-size, 16px);
+
+      &#{&}--sidebar {
+        color: rgba(42,56,66,0.65);
+      }
+    }
+  }
+}

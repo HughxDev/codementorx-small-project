@@ -1,0 +1,43 @@
+@import 'styles/index';
+
+.cxsp {
+  &-header{
+    position: relative;
+    @include rem(height, $header-height);
+    // Border weight is 1px, but it occupies 3px in the mockup,
+    // so redistributing 1px each to padding and margin to even out
+    @include rem(border-bottom, 1px solid rgba(42,56,66,0.2));
+    @include rem(padding-bottom, 1px);
+    @include rem(margin-bottom, ( $header-margin-bottom + 1px ));
+
+    &__heading,
+    &__add-idea {
+      display: inline-block;
+      vertical-align: middle;
+      position: absolute;
+    }
+
+    &__heading {
+      @include rem(font-size, 28px);
+      @include rem(top, 41px);
+      margin: 0;
+    }
+
+    &__add-idea {
+      $size: 50px;
+
+      right: 0;
+      @include rem(top, 44px);
+      background-color: $green;
+      border: none;
+      color: white;
+      @include rem(width, $size);
+      @include rem(height, $size);
+      @include rem(border-radius, $size * 2);
+      @include rem(font-size, 28px);
+      font-weight: lighter;
+      padding: 0;
+      line-height: 0.5;
+    }
+  }
+}

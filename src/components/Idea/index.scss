@@ -1,0 +1,90 @@
+@import 'styles/index';
+
+.cxsp {
+  &-button#{&}-button--idea-action {
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &-button#{&}-button--idea-action + &-button#{&}-button--idea-action {
+    @include rem(margin-left, 22px);
+  }
+
+  //cxsp-ideas__idea cxsp-ideas__idea--enter cxsp-ideas__idea--enter-active
+  &-ideas__idea {
+    &#{&}--enter > td {
+      transition: .5s;
+      // height: 0 !important
+      // padding: 0 !important;
+      top: -37px;
+      opacity: 0;
+    }
+
+    &#{&}--enter-active > td {
+      // @include rem(height, 36px !important);
+      top: 0;
+      opacity: 1;
+    }
+
+    &#{&}--exit > td {
+      transition: .5s;
+      top: 0;
+      opacity: 1;
+      // @include rem(height, 36px !important);
+    }
+
+    &#{&}--exit-active > td {
+      // height: 0 !important;
+      top: -37px;
+      opacity: 0;
+    }
+  }
+
+  &-idea {
+    &-action {
+      &__icon {
+        display: inline-block;
+      }
+    }
+
+    &__datum {
+      @include rem(padding, ( 36px / 2 ) 0 );
+      position: relative;
+
+      &--content {
+        @include rem(padding-right, 48px);
+
+        &::before {
+          content: '•';
+          display: inline-block;
+          position: absolute;
+          @include rem(left, -17px);
+          @include rem(width, 8px);
+          top: calc( 50% - 8px);
+          top: calc( 50% - #{rem(8px)});
+          color: transparent;
+          background: rgba(42,56,66,0.40);
+          @include rem(width, 8px);
+          @include rem(height, 8px);
+          @include rem(border-radius, 16px);
+          vertical-align: middle;
+        }
+      }
+    }
+
+    &__action {
+      &--accept {
+        @include rem(width, 21px);
+        @include rem(height, 16px);
+      }
+
+      &--cancel {
+        @include rem(width, 18px);
+        @include rem(height, 18px);
+      }
+    }
+  }
+}
