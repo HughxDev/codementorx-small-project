@@ -70,6 +70,16 @@ class App extends Component {
 
   signUp = ( formData ) => {
     console.log( 'Attempting to sign up' );
+
+    API.User.create( formData ).then( ( result ) => {
+      console.log( 'Signed up' );
+      // console.log( result );
+      this.setState( { "isLoggedIn": API.User.isLoggedIn() } );
+    } )
+    .catch( ( error ) => {
+      console.log( error );
+      this.setState( { "isLoggedIn": API.User.isLoggedIn() } );
+    } );
   };
 
   logIn = ( formData ) => {
